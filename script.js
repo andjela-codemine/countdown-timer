@@ -1,5 +1,5 @@
 
-const targetDate = new Date('2024-02-22T23:59:59');
+const targetDate = new Date('2024-03-12T00:00:59');
 
 setInterval(() => {
   const now = new Date();
