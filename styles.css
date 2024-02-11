@@ -1,8 +1,8 @@
 :root {
-  --days: 0;
-  --hours: 0;
-  --minutes: 0;
-  --seconds: 0;
+  --days: 39;
+  --hours: 14;
+  --minutes: 30;
+  --seconds: 60;
   --grayish-blue: hsl(237, 18%, 59%);
   --desaturated-blue: hsl(236, 21%, 26%);
   --dark-blue-800: hsl(235, 16%, 14%);
@@ -92,7 +92,23 @@ main {
   height: var(--_flip-card-size);
   width: var(--_flip-card-size);
 }
-
+.flip-card::before, .flip-card::after {
+  --_side_dot: px;
+  content: "";
+  background: var(--dark-blue-900);
+  border-radius: 50%;
+  height: var(--_side_dot);
+  width: var(--_side_dot);
+  top: 50%;
+  position: absolute;
+  transform: translateY(-50%);
+}
+.flip-card::before {
+  left: calc(var(--_side_dot) / -2);
+}
+.flip-card::after {
+  right: calc(var(--_side_dot) / -2);
+}
 .flip-card .top::before {
   content: "";
   background: var(--bg-clr-card-shadow);
@@ -102,6 +118,7 @@ main {
 
 .flip-card .top,
 .flip-card .bottom {
+  --_speed: 450ms;
   background: var(--bg-clr-card);
   display: flex;
   justify-content: center;
@@ -110,6 +127,12 @@ main {
   height: 50%;
   width: 100%;
   transform-style: preserve-3d;
+}
+.flip-card .top[data-flip=true] {
+  animation: top-to-bottom var(--_speed) ease-in;
+}
+.flip-card .bottom[data-flip=true] {
+  animation: bottom-to-top var(--_speed) ease-out var(--_speed);
 }
 .flip-card .top {
   border-radius: 0.5rem 0.5rem 0 0;
@@ -176,5 +199,20 @@ main {
 
   .content-grid {
     gap: 16px;
+  }
+}
+@keyframes top-to-bottom {
+  100% {
+    transform: rotateX(-90deg);
+  }
+}
+@keyframes bottom-to-top {
+  0% {
+    transform: rotateX(90deg);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0.3);
+  }
+  100% {
+    transform: rotateX(0deg);
+    box-shadow: 0 5px 5px rgba(0, 0, 0, 0);
   }
 }
